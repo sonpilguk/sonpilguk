@@ -1,0 +1,28 @@
+pip install Beautifulsoup4
+pip install requests
+
+import requests
+from bs4 import BeautifulSoup as bs
+
+def main():
+    list_title = []
+
+    for i in range(23,29):
+        url = "https://www.kyeonggi.com/list/"+str(i)
+        html = requests.get(url)
+        #print(html.txt)
+        soup = bs(html.text,'html.parser')
+        #print(soup)
+
+    #soup.select 단서를 많이 포함할 수 있음
+        for news_title in soup.find_all('h3'):
+            #print(news_title.get_text())
+            list_title.append(news_title.get_text())
+
+
+    
+    for i in list_title:
+        print(i)
+        print()
+if __name__=='__main__':
+    main()
