@@ -1,0 +1,27 @@
+ import requests
+from bs4 import BeautifulSoup as bs
+from openpyxl import Workbook
+def main():
+    url = 'https://www.newsis.com/realnews/'
+    html = requests.get(url)
+    #print(heml.text)
+    soup = bs(html.text,'html.parser')
+    print(soup)
+    articles = []
+    
+    for i in soup.find_all('p',{'class':'tit'}):
+        #print(i.get_text())
+        articles.append(i.get_text())#append = 추가하다
+        #배열에 추가
+    print(articles)
+    wb = Workbook()
+    sheet1 = wb.active
+    file_name = '10308SPK.xlsx'
+    
+    for i in range(0,len(articles)):
+        sheet1.cell(row = i+1, column=1).value = i+1
+        sheet1.cell(row = i+1, column=2).value = articles[i]
+    wb.save(filename=file_name)
+    
+if __name__=='__main__':
+    main()
